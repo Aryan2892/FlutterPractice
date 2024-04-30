@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tutorial_two/bloc/counter_bloc.dart';
 import 'package:tutorial_two/cubit/counter_cubit.dart';
 import 'package:tutorial_two/home_page.dart';
 
@@ -12,17 +13,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => CounterCubit(),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => CounterCubit(),
         ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      ),
+        BlocProvider(
+          create: (_) => CounterBloc(),
+        )
+      ],
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        ),
     );
   }
 }
